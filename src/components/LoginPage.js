@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { AuthenticationDetails, CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
 
 class LoginPage extends Component {
@@ -13,40 +12,11 @@ class LoginPage extends Component {
    this.pushToValidationPage = this.pushToValidationPage.bind(this);
   }
 
-  resetPage() {
-    this.props.history.push('/');
-  }
-
   pushToValidationPage() {
-    //this.setState({saving: false});
-    //if no event we are called directly from saveCounty otherwise
-    //this is the result of a cancel
-    //if(!event) {
-    //  toastr.success('County Saved');
-    //}
-    //this.props.history.push('/validate');
-    console.log("make invisible");
-    //document.getElementById("validation").visible = false;
-    //this.forceUpdate();
     this.setState({validating: true});
   }
 
-  pushToLoginPage() {
-    //this.setState({saving: false});
-    //if no event we are called directly from saveCounty otherwise
-    //this is the result of a cancel
-    //if(!event) {
-    //  toastr.success('County Saved');
-    //}
-    //this.props.history.push('/validate');
-    console.log("make visible");
-    //document.getElementById("validation").visible = false;
-    //this.forceUpdate();
-    this.setState({validating: false});
-  }
-
   login() {
-    //let username = 'ab3solutions+BKQA11@gmail.com';
     document.getElementById("code").value = '';
     let username = document.getElementById("name").value;
     var poolData = {
@@ -56,8 +26,6 @@ class LoginPage extends Component {
     var userPool = new CognitoUserPool(poolData);
 
     let pushToValidation = this.pushToValidationPage;
-    let pushToLogin = this.pushToLoginPage;
-    let resetThePage = this.resetPage;
 
     var userData = {
         Username : username,
@@ -75,46 +43,30 @@ class LoginPage extends Component {
     var authenticationDetails = new AuthenticationDetails(authenticationData);
     cognitoUser.setAuthenticationFlowType('CUSTOM_AUTH');
     cognitoUser.authenticateUserDefaultAuth(authenticationDetails, {
-        onSuccess: function(result) {
-            //alert("Top Level - shouldn't be called");
-            console.log("Top Level - shouldn't be called");
-        },
-        onFailure: function(err) {
-           //alert("Top Level " + err.message);
-           console.log("Top Level - " + err.message);
+        onFailure: function() {          
            alert("Invalid username or password");
         },
-        customChallenge: function(challengeParameters) {
+        customChallenge: function() {
           //device challenge
           let challengeResponses;
             challengeResponses = cognitoUser.deviceKey ? cognitoUser.deviceKey : 'null';
             cognitoUser.sendCustomChallengeAnswer(challengeResponses, {
-                onSuccess: function(result) {
+                onSuccess: function() {
                     alert("Login Successful");
-                    //cognitoUser.signOut();
-                    //resetThePage();
                     window.location.href = "http://www.google.com"
-                    //alert("User logout");
                 },
-                onFailure: function(err) {
-                  console.log(err);
-                   console.log("Lower Level - " + err.message);
+                onFailure: function() {
                    alert("Invalid username or password");
                    window.location.href = "http://localhost:3000/login"
-
-                   //alert("Lower Level - " + err.message);
                 },
-                customChallenge: function(challengeParameters) {
+                customChallenge: function() {
                     // User authentication depends on challenge response
                     let selfObject = this;
-                    console.log('DEVICE ID=' + cognitoUser.deviceKey);
                     document.getElementById("validateButton").addEventListener("click", () => {
                       let challengeResponses = document.getElementById("code").value + " " + cognitoUser.deviceKey;
                       cognitoUser.sendCustomChallengeAnswer(challengeResponses, selfObject);
                     });
-                    //alert("Please enter your one time password now");
                     pushToValidation();
-                    console.log('PLEASE ENTER NOW = ' + challengeParameters.token);
                     return;
                 }
             });

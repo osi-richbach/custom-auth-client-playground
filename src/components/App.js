@@ -1,8 +1,7 @@
 /* eslint-disable import/no-named-as-default */
-import { NavLink, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import LoginPage from "./LoginPage";
-import PropTypes from "prop-types";
 import React from "react";
 import { hot } from "react-hot-loader";
 
@@ -12,7 +11,6 @@ import { hot } from "react-hot-loader";
 
 class App extends React.Component {
   render() {
-    const activeStyle = { color: 'blue' };
     return (
       <div>
         <Switch>
@@ -22,9 +20,5 @@ class App extends React.Component {
     );
   }
 }
-
-App.propTypes = {
-  children: PropTypes.element
-};
 
 export default hot(module)(App);
