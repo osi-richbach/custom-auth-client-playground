@@ -2,6 +2,8 @@
 import { Route, Switch } from "react-router-dom";
 
 import LoginPage from "./LoginPage";
+import ForgotPasswordPage from "./ForgotPasswordPage";
+import Header from "./Header";
 import React from "react";
 import { hot } from "react-hot-loader";
 
@@ -12,11 +14,17 @@ import { hot } from "react-hot-loader";
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <Switch>
-          <Route exact path="/" component={LoginPage} />
-        </Switch>
-      </div>
+      <div className="container">
+        <div className="modal-dialog">
+          <div className="modal-content background-customizable modal-content-desktop visible-md visible-lg">
+          <Header/>
+          <div id="div-forms" className="modal-body">
+            <Switch>
+              <Route path="/login" component={LoginPage} />
+              <Route path="/forgotpassword" component={ForgotPasswordPage} />
+            </Switch>
+        </div>
+      </div></div></div>
     );
   }
 }

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { MemoryRouter } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 export default class Root extends Component {
   render() {
     return (
-      <MemoryRouter>
+      <BrowserRouter>
         <App />
-      </MemoryRouter>
+      </BrowserRouter>
     );
   }
 }
