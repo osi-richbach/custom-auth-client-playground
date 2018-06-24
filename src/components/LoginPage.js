@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { AuthenticationDetails, CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
+
 import qs from 'query-string';
 import LoginForm from './LoginForm';
 import MfaForm from './MfaForm';
+import * as Auth from '../utils/Auth';
 
+//TODO - redirect_uri on the url?  save it to state
 class LoginPage extends Component {
   constructor(props, context) {
    super(props, context);
@@ -78,39 +80,15 @@ class LoginPage extends Component {
     });
   }
 
-  cognitoUser() {
-    let username = this.state.email;
-    var poolData = {
-        UserPoolId : 'us-east-2_JDIuaVjlq',
-        ClientId : '7ub8kdb6eaeiul3a07h27g4dfu'
-    };
-    var userPool = new CognitoUserPool(poolData);
-    var userData = {
-        Username : username,
-        Pool : userPool
-    };
-    return new CognitoUser(userData);
-  }
-
-  authenticationDetails() {
-    var authenticationData = {
-      Username : this.state.email,
-      Password : this.state.password
-    };
-
-    return new AuthenticationDetails(authenticationData);
-  }
-
   login() {
     let showValidationArea = this.showValidationArea;
     let showError = this.showError;
-
-    let cognitoUser = this.cognitoUser();
+    let cognitoUser = Auth.createUser(this.state);
     this.setState({
       cognitoUser: cognitoUser
-    })
+    });
     cognitoUser.setAuthenticationFlowType('CUSTOM_AUTH');
-    let authenticationDetails = this.authenticationDetails();
+    let authenticationDetails = Auth.authenticationDetails(this.state);
     cognitoUser.authenticateUserDefaultAuth(authenticationDetails, {
         onFailure: function(err) { 
           if(err.code === 'InvalidParameterException') {

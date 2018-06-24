@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ErrorMessage from './ErrorMessage';
 
 const LoginForm = ({onSubmit, errorMsg, email, password, onEmailChange, onPasswordChange}) => {
   return (
         <div>
             <span className="textDescription-customizable "><h1>Log In</h1></span>
             
-            <div style={{display : ((!errorMsg || 0 === errorMsg.length) ? 'none' : 'block')}} id="loginErrorMessage" className="errorMessage-customizable">
-                <div  >{errorMsg} </div>
-            </div>
+            <ErrorMessage msg={errorMsg}/>
             <label className="label-customizable">Email</label>
             <div><input id="email" name="email" type="text" className="form-control inputField-customizable"
                         placeholder="Email" value={email} onChange={onEmailChange}/></div>
