@@ -45,6 +45,22 @@ describe('LoginForm.js Tests', () => {
     });
 
     describe('email input Tests', () => {  
+        it('contains label', () => {
+            let mock = jest.fn();
+            const wrapper = shallow(<LoginForm 
+                                        email="a" 
+                                        password="thepassword" 
+                                        onSubmit={mock} 
+                                        onEmailChange={mock}
+                                        onPasswordChange={mock}
+                                        errorMsg="some_message"/>);
+
+            let label = wrapper.find('label');
+
+            expect(label).toHaveLength(2);
+            expect(label.at(0).text()).toEqual('Email');
+        });
+
         it('contains text input for email', () => {
             let mock = jest.fn();
             const wrapper = shallow(<LoginForm 
@@ -113,7 +129,23 @@ describe('LoginForm.js Tests', () => {
         }); 
     });
     
-    describe('password input Tests', () => {  
+    describe('password input Tests', () => { 
+        it('contains label', () => {
+            let mock = jest.fn();
+            const wrapper = shallow(<LoginForm 
+                                        email="a" 
+                                        password="thepassword" 
+                                        onSubmit={mock} 
+                                        onEmailChange={mock}
+                                        onPasswordChange={mock}
+                                        errorMsg="some_message"/>);
+
+            let label = wrapper.find('label');
+
+            expect(label).toHaveLength(2);
+            expect(label.at(1).text()).toEqual('Password');
+        });
+
         it('contains text input for password', () => {
             let mock = jest.fn();
             const wrapper = shallow(<LoginForm 
