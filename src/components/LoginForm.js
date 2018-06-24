@@ -20,7 +20,7 @@ const LoginForm = ({onSubmit, errorMsg, email, password, onEmailChange, onPasswo
                 href="/forgotPassword?redirect_uri=https://web.integration.cwds.io/perry/login&amp;response_type=code&amp;state=7DRlOO">Forgot
                 your password?</a>
             
-            <button className="btn btn-primary submitButton-customizable" type="button" onClick={onSubmit}>Sign in</button>
+            <button className="btn btn-primary submitButton-customizable" type="button" onClick={onSubmit}>Sign In</button>
             <br/>
         </div>
   );
