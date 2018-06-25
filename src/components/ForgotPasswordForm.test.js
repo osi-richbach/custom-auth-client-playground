@@ -6,9 +6,10 @@ import ErrorMessage from './ErrorMessage';
 describe('ForgotPasswordForm.js Tests', () => {  
     it('should require correct params', () => {
         let mock = jest.fn();
+        // eslint-disable-next-line no-console
         console.error = mock;
 
-        const wrapper = shallow(<ForgotPasswordForm/>);
+        shallow(<ForgotPasswordForm/>);
         
         expect(mock).toHaveBeenCalledTimes(3);
         let concat = [].concat(...mock.mock.calls);

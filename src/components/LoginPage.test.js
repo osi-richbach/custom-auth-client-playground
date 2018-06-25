@@ -159,6 +159,7 @@ describe('LoginPage.js Tests', () => {
 
         let mockAuthCreateUser = jest.fn();
         
+        // eslint-disable-next-line 
         Auth.createUser = mockAuthCreateUser;
 
         beforeEach(() => {    

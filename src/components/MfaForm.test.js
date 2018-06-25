@@ -5,9 +5,10 @@ import MfaForm from './MfaForm';
 describe('MfaForm.js Tests', () => {  
     it('should require correct params', () => {
         let mock = jest.fn();
+        // eslint-disable-next-line no-console
         console.error = mock;
 
-        const wrapper = shallow(<MfaForm/>);
+        shallow(<MfaForm/>);
         
         expect(mock).toHaveBeenCalledTimes(2);
         let concat = [].concat(...mock.mock.calls);

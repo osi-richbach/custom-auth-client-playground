@@ -86,6 +86,7 @@ describe('ForgotPasswordPage.js Tests', () => {
         let mockAuthCreateUser = jest.fn();
         
         beforeEach(() => {    
+            // eslint-disable-next-line 
             Auth.createUser = mockAuthCreateUser;
             cognitoUser = {
                 forgotPassword: mockForgotPassword
@@ -165,7 +166,8 @@ describe('ForgotPasswordPage.js Tests', () => {
 
         let mockAuthCreateUser = jest.fn();
 
-        beforeEach(() => {    
+        beforeEach(() => {   
+            // eslint-disable-next-line  
             Auth.createUser = mockAuthCreateUser;
             cognitoUser = {
                 confirmPassword: mockConfirmPassword

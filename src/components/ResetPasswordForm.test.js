@@ -6,9 +6,11 @@ import ErrorMessage from './ErrorMessage';
 describe('ResetPasswordForm.js Tests', () => {  
     it('should require correct params', () => {
         let mock = jest.fn();
+        
+        // eslint-disable-next-line no-console
         console.error = mock;
 
-        const wrapper = shallow(<ResetPasswordForm/>);
+        shallow(<ResetPasswordForm/>);
         
         expect(mock).toHaveBeenCalledTimes(8);
         let concat = [].concat(...mock.mock.calls);
@@ -33,7 +35,6 @@ describe('ResetPasswordForm.js Tests', () => {
     });
 
     it('should pass errorMsg to <ErrorMessage>', () => {
-        let mock = jest.fn();
         const wrapper = shallow(<ResetPasswordForm errorMsg="some_message"/>);
 
         let errorMessageTag = wrapper.find(ErrorMessage);

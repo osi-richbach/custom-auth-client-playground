@@ -50,7 +50,7 @@ class ForgotPasswordPage extends Component {
       inputVerificationCode() {
         showResetArea();
       }
-  });
+    });
     
   }
 

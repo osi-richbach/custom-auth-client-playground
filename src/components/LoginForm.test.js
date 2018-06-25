@@ -6,9 +6,10 @@ import ErrorMessage from './ErrorMessage';
 describe('LoginForm.js Tests', () => {  
     it('should require correct params', () => {
         let mock = jest.fn();
+        // eslint-disable-next-line no-console
         console.error = mock;
 
-        const wrapper = shallow(<LoginForm/>);
+        shallow(<LoginForm/>);
         
         expect(mock).toHaveBeenCalledTimes(5);
         let concat = [].concat(...mock.mock.calls);
