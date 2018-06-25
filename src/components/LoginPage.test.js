@@ -253,6 +253,50 @@ describe('LoginPage.js Tests', () => {
                 
             });
 
+            it('calls sendToRedirectUri when success', () => {
+                let mockSendToRedirectUri = jest.fn();
+    
+                let sendCustomChallengeAnswer = (response, callback) => {
+                    callback.onSuccess();
+                }
+                let cognitoUser = {
+                    deviceKey: 'device_key',
+                    sendCustomChallengeAnswer: sendCustomChallengeAnswer
+                };
+                const wrapper = shallow(<LoginPage />);
+                wrapper.setState(
+                    {
+                        cognitoUser: cognitoUser,
+                        code: 'some_code'
+                    }
+                );
+                
+                let instance = wrapper.instance();
+                instance.sendToRedirectUri = mockSendToRedirectUri;
+                instance.validate();
+                expect(mockSendToRedirectUri.mock.calls.length).toEqual(1);
+            });
+
+            it('calls sendToRedirectUri', () => {
+                let mockSendToRedirectUri = jest.fn();
+                const wrapper = shallow(<LoginPage />);
+                cognitoUser.authenticateUserDefaultAuth = (details, callback ) => {
+                    callback.customChallenge();
+                };
+                cognitoUser.sendCustomChallengeAnswer = (details, callback ) => {
+                    callback.onSuccess();
+                }
+                
+                let instance = wrapper.instance();
+                instance.sendToRedirectUri = mockSendToRedirectUri;
+                instance.login();
+    
+            
+                expect(mockSendToRedirectUri.mock.calls.length).toEqual(1);
+                expect(mockSendToRedirectUri.mock.calls[0].length).toEqual(0);
+                
+            });
+
             it('shows validation area', () => {
                 let mockShowValidationArea = jest.fn();
                 const wrapper = shallow(<LoginPage />);

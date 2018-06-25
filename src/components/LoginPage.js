@@ -88,6 +88,8 @@ class LoginPage extends Component {
   login() {
     let showValidationArea = this.showValidationArea;
     let showError = this.showError;
+    let sendToRedirectUri = this.sendToRedirectUri;
+
     let cognitoUser = Auth.createUser(this.state);
     this.setState({
       cognitoUser: cognitoUser
@@ -107,6 +109,9 @@ class LoginPage extends Component {
           let challengeResponses;
             challengeResponses = cognitoUser.deviceKey ? cognitoUser.deviceKey : 'null';
             cognitoUser.sendCustomChallengeAnswer(challengeResponses, {
+                onSuccess: function() {
+                  sendToRedirectUri();
+                },
                 onFailure: function(err) {
                   showError(err.message);
                 },
