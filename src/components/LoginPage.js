@@ -24,6 +24,7 @@ class LoginPage extends Component {
    this.updateEmailState = this.updateEmailState.bind(this);
    this.updatePasswordState = this.updatePasswordState.bind(this);
    this.updateCodeState = this.updateCodeState.bind(this);
+   this.sendToRedirectUri = this.sendToRedirectUri.bind(this);
   }
 
   updateCodeState(event) {
@@ -61,18 +62,22 @@ class LoginPage extends Component {
     });
   }
 
+  sendToRedirectUri() {
+       //TODO - this is where the integration with Perry is.
+       const parsed = qs.parse(location.search);
+       //FOR NOW JUST SEND TO PAGE
+       //INTEGRATION WITH PERRY WILL BE A REST CALL WITH RESULT
+         window.location.href = parsed.redirect_uri;
+  }
+
   validate() {
     let cognitoUser = this.state.cognitoUser;
-
+    let sendToRedirectUri = this.sendToRedirectUri;
     let challengeResponses = this.state.code + " " + cognitoUser.deviceKey;
     let showError = this.showError;
     cognitoUser.sendCustomChallengeAnswer(challengeResponses, {
       onSuccess: function() {
-        //TODO - this is where the integration with Perry is.
-        const parsed = qs.parse(location.search);
-        //FOR NOW JUST SEND TO PAGE
-        //INTEGRATION WITH PERRY WILL BE A REST CALL WITH RESULT
-          window.location.href = parsed.redirect_uri;
+        sendToRedirectUri();
       },
       onFailure: function() {
         showError("Unable to verify account");
@@ -113,7 +118,7 @@ class LoginPage extends Component {
         }
     });
   }
-
+ 
   render() {
     if( !this.state.validating ) {
       return (
